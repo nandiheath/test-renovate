@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=./config.schema.json
+# The above line notifies the VSCode language server to use the schema distributed
+# with Cobs for this file. Make sure it's included for all monitor.*.yaml files in
+# your repo to have validation in your IDE. Follow these instructions if you use
+# Intellij: https://www.jetbrains.com/help/ruby/yaml.html#remote_json
+
+# Tags added here will be added to all monitors.
+# A "team" tag is required. It should match the name
+# of a Registry team that will be managing these resources.
+global_tags:
+  team: my-team
+
+
+# TODO: update this with example
+# Format should be "@pagerduty-<your pagerduty service name kebab cased>"
+# https://docs.datadoghq.com/monitors/notify/#notifications
+alert_recipients: []
+
+integrations:
+  - type: pagerduty
+    params:
+      serviceName: My Example PagerDuty Service

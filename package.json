@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "renovate": "^36.78.3"
+  },
+  "scripts": {
+    "test": "renovate --help"
+  }
+}

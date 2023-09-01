@@ -1,0 +1,37 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    ':semanticCommits'
+  ],
+  "enabledManagers": ["terragrunt"],
+  "packageRules": [
+    // Only allow Terraform version to be set to 1.2.3 to match Atlantis Terraform version
+    {
+      matchManagers: [
+        'terragrunt'
+      ],
+      matchDepNames: [
+        'github.com/nandiheath/test-renovate-packages'
+      ],
+      versioning: 'regex:^(?<compatibility>.*)\\/v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)?$',
+      additionalBranchPrefix: '{{parentDir}}-',
+      groupName: 'terragrunt-dependency',
+      automerge: false,
+      addLabels: [
+        'terragrunt'
+      ],
+      commitMessageTopic: '{{parentDir}}',
+    },
+    {
+      matchManagers: [
+        'terragrunt'
+      ],
+      matchFiles: [
+        'terragrunt/**'
+      ],
+      addLabels: ['terragrunt'],
+      commitMessageAction: '[staging]',
+      additionalBranchPrefix: "staging-{{parentDir}}-",
+    }
+  ]
+}

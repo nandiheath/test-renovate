@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/squareup/cash-observability/cobs/pkg/types/config-interface",
+  "$ref": "#/$defs/ConfigInterface",
+  "$defs": {
+    "ConfigInterface": {
+      "properties": {
+        "global_tags": {
+          "patternProperties": {
+            ".*": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "alert_recipients": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "title": "Alert Recipients",
+          "description": "A list of recipients for all monitors"
+        },
+        "integrations": {
+          "items": {
+            "$ref": "#/$defs/Integration"
+          },
+          "type": "array"
+        },
+        "notifications": {
+          "$ref": "#/$defs/Notifications",
+          "title": "Notifications",
+          "description": "Priority based monitor notification recipients"
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "global_tags",
+        "integrations"
+      ]
+    },
+    "Integration": {
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "params": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "type",
+        "params"
+      ]
+    },
+    "Notifications": {
+      "properties": {
+        "p1": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "title": "P1 Notifications",
+          "description": "Recipients of P1 alerts"
+        },
+        "p2": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "title": "P2 Notifications",
+          "description": "Recipients of P2 alerts"
+        },
+        "p3": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "title": "P3 Notifications",
+          "description": "Recipients of P3 alerts"
+        },
+        "p4": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "title": "P4 Notifications",
+          "description": "Recipients of P4 alerts"
+        },
+        "p5": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "title": "P5 Notifications",
+          "description": "Recipients of P5 alerts"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    }
+  }
+}

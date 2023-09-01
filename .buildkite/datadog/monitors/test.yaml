@@ -1,0 +1,13 @@
+monitors:
+  - name: test
+    template: k8s-cpu#1.0.0
+    params:
+      test: true
+  - name: Observability Deployment Health
+    template: k8s-deployment-health#1.0.0
+    params:
+      services:
+        - ratelimit
+        - vector
+        - vector-haproxy
+      notification_preset_name: "hide_query"

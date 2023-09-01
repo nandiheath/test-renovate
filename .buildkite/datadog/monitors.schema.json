@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/squareup/cash-observability/cobs/pkg/types/monitor-interface",
+  "$ref": "#/$defs/MonitorInterface",
+  "$defs": {
+    "Monitor": {
+      "oneOf": [
+        {
+          "properties": {
+            "name": {
+              "type": "string",
+              "title": "Name",
+              "description": "A unique name for the template"
+            },
+            "template": {
+              "type": "string",
+              "title": "Template",
+              "description": "The name of the template module to reference"
+            },
+            "params": {
+              "type": "object",
+              "title": "Params",
+              "description": "Parameters that are applied to the template. Inspect the template definition to identify which parameters are available and which are required."
+            }
+          },
+          "additionalProperties": false,
+          "type": "object",
+          "required": [
+            "name",
+            "template",
+            "params"
+          ]
+        },
+        {
+          "properties": {
+            "name": {
+              "type": "string",
+              "title": "Name",
+              "description": "A unique name for the monitor"
+            },
+            "type": {
+              "type": "string",
+              "title": "Type",
+              "description": "The type of monitor to provision"
+            },
+            "query": {
+              "type": "string",
+              "title": "Query",
+              "description": "The Datadog query that will be evaluated"
+            },
+            "message": {
+              "type": "string",
+              "title": "Message"
+            },
+            "thresholds": {
+              "type": "object",
+              "title": "Thresholds"
+            },
+            "runbook": {
+              "type": "string",
+              "title": "Runbook",
+              "description": "A link to the runbook for the monitor"
+            },
+            "priority": {
+              "type": "integer",
+              "title": "Priority",
+              "description": "The priority level of the monitor which will be sent to PagerDuty"
+            },
+            "constituent": {
+              "type": "boolean",
+              "title": "Constituent",
+              "description": "Whether or not the monitor is a constituent monitor for use in a Composite Monitor"
+            },
+            "evaluation_delay": {
+              "type": "integer",
+              "title": "Evaluation Delay",
+              "description": "The time in seconds to delay evaluation of this monitor"
+            },
+            "timeout_h": {
+              "type": "integer",
+              "title": "Timeout H",
+              "description": "The number of hours of the monitor not reporting data before it automatically resolves from a triggered state"
+            },
+            "monitor_threshold_windows": {
+              "type": "object",
+              "title": "Monitor Threshold Windows",
+              "description": "Can only be used for and are required for anomaly monitors"
+            },
+            "notify_no_data": {
+              "type": "boolean",
+              "title": "Notify No Data",
+              "description": "Whether or not the monitor should alert when no data is found"
+            },
+            "no_data_timeframe": {
+              "type": "integer",
+              "title": "No Data Timeframe",
+              "description": "The number of minutes before a monitor will notify when data stops reporting. Defaults to 10 minutes"
+            },
+            "new_group_delay": {
+              "type": "integer",
+              "title": "New Group Delay",
+              "description": "The time (in seconds) to skip evaluations for new groups"
+            },
+            "group_retention_duration": {
+              "type": "string",
+              "title": "Group Rention Duration",
+              "description": "The time span after which groups with missing data are dropped from the monitor state. The minimum value is one hour and the maximum value is 72 hours. Example values are: 60m or 1h or 2d"
+            },
+            "include_tags": {
+              "type": "boolean",
+              "title": "Include Triggering Tags",
+              "description": "A boolean indicating whether notifications from this monitor automatically insert its triggering tags into the title. Defaults to false"
+            }
+          },
+          "additionalProperties": false,
+          "type": "object",
+          "required": [
+            "name",
+            "query",
+            "message"
+          ]
+        }
+      ],
+      "type": "object"
+    },
+    "MonitorInterface": {
+      "properties": {
+        "tags": {
+          "patternProperties": {
+            ".*": {
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "description": "Tags which will be applied to resources only in this file"
+        },
+        "recipients": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "Recipients of monitors that are declared only in this file"
+        },
+        "monitors": {
+          "items": {
+            "$ref": "#/$defs/Monitor"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "monitors"
+      ]
+    }
+  }
+}
